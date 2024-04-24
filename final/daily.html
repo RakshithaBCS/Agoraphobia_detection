@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chatbot Example</title>
+    <style>
+        /* Chat Container Styles */
+        #chat-container {
+            width: 100vw; /* Full width of the viewport */
+            height: 100vh; /* Full height of the viewport */
+            margin: 0;
+            padding: 0;
+            border: none; /* Remove border */
+            position: fixed; /* Fixed position to cover the entire screen */
+            top: 0;
+            left: 0;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end; /* Align chat to the bottom of the screen */
+            background-color: #f2f2f2; /* Background color */
+            padding-bottom: 70px; /* Additional padding for the input box */
+            font-family: Arial, sans-serif;
+        }
+
+        #chat-messages {
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+            flex-grow: 1; /* Allow the chat messages to grow and take up remaining space */
+            overflow-y: auto; /* Enable vertical scrolling */
+            padding: 10px;
+        }
+
+        /* Message Styles */
+        .user-message, .bot-message {
+            border-radius: 20px;
+            padding: 10px 15px;
+            margin-bottom: 10px;
+            max-width: 20%;
+            word-wrap: break-word;
+        }
+
+        .user-message {
+            background-color: gray;
+            color: #fff;
+            align-self: flex-end;
+        }
+
+        .bot-message {
+            background-color: #ffffff;
+            color: #333;
+            align-self: flex-start;
+        }
+
+        /* Input box style */
+        #user-input {
+            height: 50px; /* Increase the height of the input box */
+            border: 1px solid #ccc;
+            border-radius: 25px;
+            padding: 10px 20px;
+            font-size: 16px;
+            margin: 10px;
+            outline: none;
+            flex-shrink: 0; /* Prevent input box from shrinking */
+        }
+
+        #user-input:focus {
+            border-color: gray;
+        }
+
+        /* Button style */
+        #send-button {
+            background-color: gray;
+            color: #fff;
+            border: none;
+            border-radius: 25px;
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            margin: 10px;
+            flex-shrink: 0; /* Prevent button from shrinking */
+        }
+
+        #send-button:hover {
+            background-color: gray;
+        }
+
+    </style>
+</head>
+<body>
+    <div id="chat-container">
+        <ul id="chat-messages"></ul>
+        <div style="display: flex;">
+            <input type="text" id="user-input" placeholder="Type your message...">
+            <button id="send-button">Send</button>
+        </div>
+    </div>
+
+    <script>
+        const chatMessages = document.getElementById('chat-messages');
+        const userInput = document.getElementById('user-input');
+        const sendButton = document.getElementById('send-button');
+
+        // Function to add a message to the chat interface
+        function addMessage(message, sender) {
+            const listItem = document.createElement('li');
+            listItem.textContent = message;
+            listItem.classList.add(sender === 'user' ? 'user-message' : 'bot-message');
+            chatMessages.appendChild(listItem);
+            chatMessages.scrollTop = chatMessages.scrollHeight; // Scroll to the bottom of the chat
+        }
+
+        // Function to handle user input
+        function handleUserInput() {
+            const message = userInput.value.trim();
+            if (message !== '') {
+                addMessage(message, 'user');
+                // Call the function to generate a bot response
+                generateBotResponse(message.toLowerCase());
+                userInput.value = '';
+            }
+        }
+
+        // Function to generate a bot response
+        function generateBotResponse(userMessage) {
+            let botResponse;
+
+            if (userMessage.includes('hii') || userMessage.includes('hello') || userMessage.includes('hey')) {
+                botResponse = 'Hello! How can I assist you today?';
+            } else if (userMessage.includes('good morning')) {
+                botResponse = 'Good morning! How can I assist you today?';
+            } else if (userMessage.includes('good afternoon')) {
+                botResponse = 'Good afternoon! How can I assist you today?';
+            } else if (userMessage.includes('good evening')) {
+                botResponse = 'Good evening! How can I assist you today?';
+            } else if (userMessage.includes('depression')) {
+                botResponse = 'Depression is often treated with a combination of therapy and medication. Cognitive-behavioral therapy (CBT) and antidepressant medications are common treatment approaches. It\'s important to consult with a healthcare professional for personalized treatment.';
+            } else if (userMessage.includes('anxiety')) {
+                botResponse = 'Anxiety can be treated with therapy, medication, or a combination of both. Cognitive-behavioral therapy (CBT), exposure therapy, and medications such as SSRIs or benzodiazepines may be recommended depending on the severity of the anxiety and individual factors.';
+            } else if (userMessage.includes('panic disorder')) {
+                botResponse = 'Treatment for panic disorder often involves therapy, medication, or a combination of both. Cognitive-behavioral therapy (CBT), exposure therapy, and medications such as SSRIs or benzodiazepines may be prescribed to help manage symptoms and prevent panic attacks.';
+            } else if (userMessage.includes('agoraphobia')) {
+                botResponse = 'Agoraphobia treatment may include therapy, medication, or a combination of both. Cognitive-behavioral therapy (CBT) and exposure therapy are commonly used to help individuals gradually confront and overcome their fears. Medications such as SSRIs or SNRIs may also be prescribed.';
+            } else if (userMessage.includes('sleep cycle') || userMessage.includes('sleep')) {
+                botResponse = 'The sleep cycle consists of four stages of non-REM sleep followed by REM sleep, where most dreaming occurs. Each complete sleep cycle lasts about 90 minutes and repeats throughout the night. Good sleep hygiene practices can help promote healthy sleep cycles.';
+            } else if (userMessage.includes('dementia')) {
+                botResponse = 'Dementia is a syndrome characterized by a decline in cognitive function severe enough to interfere with daily life. It can affect memory, thinking, behavior, and the ability to perform everyday tasks. There are various types of dementia, including Alzheimer\'s disease, vascular dementia, and Lewy body dementia.';
+            } else if (userMessage.includes('bipolar disorder')) {
+                botResponse = 'Bipolar disorder is a mental health condition characterized by extreme mood swings that include emotional highs (mania or hypomania) and lows (depression). These mood swings can affect sleep, energy level, behavior, judgment, and the ability to think clearly.';
+            } else if (userMessage.includes('schizophrenia')) {
+                botResponse = 'Schizophrenia is a chronic mental disorder characterized by disturbances in thinking, emotions, and behavior. Symptoms include hallucinations, delusions, disorganized thinking, and impaired social functioning. Treatment typically involves antipsychotic medications, therapy, and support services.';
+            } else if (userMessage.includes('obsessive-compulsive disorder') || userMessage.includes('ocd')) {
+                botResponse = 'Obsessive-compulsive disorder (OCD) is a mental health condition characterized by unwanted, intrusive thoughts (obsessions) and repetitive behaviors or mental acts (compulsions). Treatment may include therapy, medication, or a combination of both.';
+            } else if (userMessage.includes('post-traumatic stress disorder') || userMessage.includes('ptsd')) {
+                botResponse = 'Post-traumatic stress disorder (PTSD) is a mental health condition that\'s triggered by a terrifying event — either experiencing it or witnessing it. Symptoms may include flashbacks, nightmares, severe anxiety, and uncontrollable thoughts about the event.';
+            } else if (userMessage.includes('eating disorders')) {
+                botResponse = 'Eating disorders are serious mental health conditions characterized by unhealthy eating habits and often severe distress or concern about body weight or shape. Common eating disorders include anorexia nervosa, bulimia nervosa, and binge-eating disorder.';
+            } else if (userMessage.includes('substance abuse')) {
+                botResponse = 'Substance abuse involves the harmful or hazardous use of psychoactive substances, including alcohol and illicit drugs. It can lead to addiction, physical and mental health problems, and social issues. Treatment may involve therapy, medication, and support groups.';
+            } else {
+                botResponse = 'Sorry I didn\'t get you';
+            }
+
+            addMessage(botResponse, 'bot');
+        }
+
+        // Event listener for user input
+        userInput.addEventListener('keypress', function (e) {
+            if (e.key === 'Enter') {
+                handleUserInput();
+            }
+        });
+
+        // Event listener for send button
+        sendButton.addEventListener('click', function () {
+            handleUserInput();
+        });
+
+        // Display greeting message on page load
+        window.addEventListener('load', function() {
+            addMessage('Hello! I am Chatbot. How can I assist you today?', 'bot');
+        });
+    </script>
+</body>
+</html>
